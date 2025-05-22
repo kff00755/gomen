@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ごめんね！メソッドで学ぶ「生成AI超入門」 | ネクストワークスラボ合同会社</title>
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --secondary: #f8f9fa;
+            --dark: #212529;
+            --light: #ffffff;
+            --accent: #e0f0ff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--light);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 20px 0;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+            position: relative;
+        }
+        
+        .hero-content {
+            color: var(--dark);
+        }
+        
+        .hero-content {
+            max-width: 600px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #555;
+        }
+        
+        .benefits-list {
+            margin-bottom: 30px;
+            list-style: none;
+        }
+        
+        .benefits-list li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            color: #444;
+        }
+        
+        .benefits-list li:before {
+            content: "✨";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary);
+            color: var(--light);
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #3d5a88;
+        }
+        
+        section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.5rem;
+        }
+        
+        .features {
+            background-color: var(--light);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            background-color: var(--secondary);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .testimonials {
+            background-color: var(--secondary);
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .testimonial-card {
+            background-color: var(--light);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-author {
+            font-weight: 700;
+        }
+        
+        .contact {
+            background-color: var(--light);
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        textarea.form-control {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 50px 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .footer-links li {
+            margin: 0 15px;
+        }
+        
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">ネクストワークスラボ合同会社</div>
+                <ul class="nav-links">
+                    <li><a href="#hero">ホーム</a></li>
+                    <li><a href="#features">講座特徴</a></li>
+                    <li><a href="#testimonials">受講生の声</a></li>
+                    <li><a href="#contact">申し込み</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>ごめんね！メソッドで学ぶ「生成AI超入門」</h1>
+                <p>自信ゼロでも、大丈夫。"ごめんね！メソッド"が、はじめての一歩をそっと支えます。</p>
+                <ul class="benefits-list">
+                    <li>AIの仕組みをやさしく理解できる、独自の説明メソッド</li>
+                    <li>初心者でも楽しく学べる、ステップバイステップの実践カリキュラム</li>
+                    <li>受講後も安心、質問し放題のコミュニティサポート</li>
+                    <li>日常やビジネスですぐに使える、実践的なAIスキルが身につく</li>
+                </ul>
+                <a href="#contact" class="btn">今すぐ相談する</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">講座の特徴</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">★</div>
+                    <h3 class="feature-title">理解しやすい独自メソッド</h3>
+                    <p>AIに関する知識がゼロの方でも理解できる、独自の「ごめんね！メソッド」で生成AIの基礎を学べます。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✓</div>
+                    <h3 class="feature-title">実践重視のカリキュラム</h3>
+                    <p>理論だけでなく実践的なワークを通して、すぐに使える生成AIスキルが身につきます。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">♦</div>
+                    <h3 class="feature-title">充実したサポート体制</h3>
+                    <p>受講期間中はオンラインでの質問対応が可能。講座終了後も専用コミュニティで継続的にサポートします。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2 class="section-title">受講生の声</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">「AIについて何も知らなかった私でも、「ごめんね！メソッド」のおかげで分かりやすく学ぶことができました。今では日常業務に生成AIを活用しています！」</p>
+                    <p class="testimonial-author">- 田中 美子, 会社員</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">「生成AIが自社のビジネスにどう役立つのか分からなかったのですが、この講座で具体的な活用方法を学ぶことができました。マーケティングにも役立てています。」</p>
+                    <p class="testimonial-author">- 佐藤 健一, 経営者</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">「実践的なワークが多く、実際に手を動かしながら学ぶことができたのが良かったです。先生のサポートも手厚く、分かりやすい説明で安心して受講できました。」</p>
+                    <p class="testimonial-author">- 鈴木 淳, 学生</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">講座情報を受け取る</h2>
+            <form class="contact-form" action="https://docs.google.com/forms/d/e/1FAIpQLSdxxxxxxxxxxxxxxxxxxxxxxxx/formResponse" method="POST" target="_blank">
+                <div class="form-group">
+                    <input type="email" name="entry.987654321" class="form-control" placeholder="メールアドレス" required>
+                </div>
+                <div class="form-group" style="text-align: center;">
+                    <label style="display: block; margin-bottom: 10px; color: #555;">講座についての最新情報をお送りします</label>
+                </div>
+                <button type="submit" class="btn">申し込む</button>
+            </form>
+            <div class="form-note" style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: #666;">
+                <p>※ 送信後、Googleフォームのページに移動します</p>
+                <p>※ 個人情報は講座のお知らせ以外の目的では使用しません</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="logo">ネクストワークスラボ合同会社</div>
+            <ul class="footer-links">
+                <li><a href="#hero">ホーム</a></li>
+                <li><a href="#features">講座特徴</a></li>
+                <li><a href="#testimonials">受講生の声</a></li>
+                <li><a href="#contact">申し込み</a></li>
+            </ul>
+            <p>〒939-8201 富山市花園町1-3-7</p>
+            <p>TEL 076-422-5911 | メール: info@nextworks-lab.co.jp</p>
+            <p class="copyright">© 2025 ネクストワークスラボ合同会社. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
